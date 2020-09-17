@@ -1,30 +1,26 @@
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class BenchMain {
     public static void main(String[] args) throws FileNotFoundException {
 
-        //set new File to user chosen file
+        //set new file to user chosen file
         File input = getFile();
-
         assert input != null;
-        Scanner inputScanner = new Scanner(input);
 
-        System.out.println(inputScanner.next());
-        System.out.println(inputScanner.next());
-        System.out.println(inputScanner.next());
-        System.out.println(inputScanner.next());
-        System.out.println(inputScanner.next());
-        System.out.println(inputScanner.next());
+        LinkedList<Integer> list = createList(input);
+
+        System.out.println(list.toString());
     }
 
     /**
      * Creates a JFileChooser GUI that returns that user selected file.
-     * @return
+     * @return selected File
      */
-    public static File getFile(){
+    static File getFile(){
 
         //create button and chooser objects.
         JButton button = new JButton();
@@ -40,5 +36,24 @@ public class BenchMain {
             return fileChooser.getSelectedFile();
         }
         return null;
+    }
+
+    /**
+     * Takes a File parameter and returns a sorted linked list with the file's contents.
+     * @param input The file to be read from.
+     * @return LinkedList list, Integer list of the file's contents.
+     * @throws FileNotFoundException
+     */
+    static LinkedList<Integer> createList(File input) throws FileNotFoundException {
+        LinkedList<Integer> list = new LinkedList<>();
+        Scanner inputScanner = new Scanner(input);
+
+        while(inputScanner.hasNext()){
+            list.add(inputScanner.nextInt());
+        }
+
+
+
+        return list;
     }
 }
