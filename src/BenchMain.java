@@ -8,8 +8,7 @@ import java.util.Scanner;
  * Advanced Data Structures Java
  * Gerald Hoff
  * PA1 BenchMarking
- * 9/17/2020
- * Read oracle documentation for fileChooser and Timer Class.
+ * 9/18/2020
  * Git Repo: https://github.com/geraldHoff/Benchmarking
  */
 public class BenchMain {
@@ -44,9 +43,6 @@ public class BenchMain {
         System.out.println("\nMean value:" + getMean(list));
         secondTimeStamp = System.nanoTime();
         System.out.println("Found mean value in " + (secondTimeStamp - firstTimeStamp) + " nanoseconds.");
-
-        //print the list
-        printIntLinkedList(list);
     }
 
     /**
@@ -108,16 +104,5 @@ public class BenchMain {
             divisor++;
         }
         return (total / divisor);
-    }
-
-    /**
-     * Uses a ListIterator to print the list.
-     * Useful for debugging.
-     * @param list The LinkedList with values to be printed.
-     */
-    static void printIntLinkedList(LinkedList<Integer> list){
-        for (Integer integer : list) {
-            System.out.println(integer);
-        }
     }
 }
