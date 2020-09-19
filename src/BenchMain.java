@@ -1,10 +1,8 @@
-import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Scanner;
-import java.util.Timer;
 
 /**
  * Advanced Data Structures Java
@@ -12,48 +10,43 @@ import java.util.Timer;
  * PA1 BenchMarking
  * 9/17/2020
  * Read oracle documentation for fileChooser and Timer Class.
+ * Git Repo: https://github.com/geraldHoff/Benchmarking
  */
-
 public class BenchMain {
     public static void main(String[] args) throws FileNotFoundException {
 
-        //set new file to user chosen file
-        File input = getFile();
-        assert input != null;
+        //Creates file for the referenced file in args.
+        File input = new File(args[0]);
 
-        long start = System.currentTimeMillis();
+        //read and sort the list. Also report how long the process takes in milliseconds.
+        long firstTimeStamp = System.currentTimeMillis();
         LinkedList<Integer> list = createList(input);
-        long stop = System.currentTimeMillis();
-        System.out.println("Completed reading and sorting to list in " + (stop - start) + " milliseconds.");
+        long secondTimeStamp = System.currentTimeMillis();
+        System.out.println(
+                "Completed reading and sorting to list in " + (secondTimeStamp - firstTimeStamp) + " milliseconds."
+        );
 
-        assert list != null;
+        assert list != null;   
 
-        System.out.println("peek: " + list.peek());
+        //find min value and report on time taken.
+        firstTimeStamp = System.nanoTime();
+        System.out.println("\nMinimum value: " + list.peek());
+        secondTimeStamp = System.nanoTime();
+        System.out.println("Found minimum value in " + (secondTimeStamp - firstTimeStamp) + " nanoseconds.");
+
+        //find max value and report on time taken.
+        firstTimeStamp = System.nanoTime();
+        System.out.println("\nMaximum value: " + list.get(list.size() - 1));
+        secondTimeStamp = System.nanoTime();
+        System.out.println("Found maximum value in " + (secondTimeStamp - firstTimeStamp) + " nanoseconds.");
+
+        firstTimeStamp = System.nanoTime();
+        System.out.println("\nMean value:" + getMean(list));
+        secondTimeStamp = System.nanoTime();
+        System.out.println("Found mean value in " + (secondTimeStamp - firstTimeStamp) + " nanoseconds.");
 
         //print the list
         printIntLinkedList(list);
-    }
-
-    /**
-     * Creates a JFileChooser GUI that returns that user selected file.
-     * @return selected File
-     */
-    static File getFile(){
-
-        //create button and chooser objects.
-        JButton button = new JButton();
-        JFileChooser fileChooser = new JFileChooser();
-
-        //specify the attributes of the JFileChooser
-        fileChooser.setDialogTitle("Text File Selector");
-        fileChooser.setCurrentDirectory(new java.io.File("."));
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-
-        //launch GUI and return file.
-        if (fileChooser.showOpenDialog(button) == JFileChooser.APPROVE_OPTION){
-            return fileChooser.getSelectedFile();
-        }
-        return null;
     }
 
     /**
@@ -98,6 +91,23 @@ public class BenchMain {
             return list;
         }
         return null;
+    }
+
+    /**
+     * Finds the mean value of a LinkedList.
+     * @param list The LinkList of integers.
+     * @return The total of the integers divided by the number of integers.
+     */
+    static long getMean(LinkedList<Integer> list){
+        ListIterator<Integer> linkedList = list.listIterator();
+        int total = 0;
+        int divisor = 0;
+
+        while(linkedList.hasNext()){
+            total = total + linkedList.next();
+            divisor++;
+        }
+        return (total / divisor);
     }
 
     /**
